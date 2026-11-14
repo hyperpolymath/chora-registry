@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
 <!-- Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk> -->
-<!-- Authoritative source: docs/AI-CONVENTIONS.md -->
+<!-- Authoritative source: docs/practice/AI-CONVENTIONS.adoc -->
 
 # Copilot Instructions
 
@@ -33,10 +33,10 @@
 
 ## Banned Languages
 
-- No TypeScript (use ReScript)
-- No Node.js / npm / bun (use Deno)
+- No TypeScript or ReScript (use AffineScript)
+- No Node.js or yarn (use Bun; runtime order Bun > Deno > pnpm > npm, npm only as the last resort)
 - No Go (use Rust)
-- No Python (use Julia or Rust)
+- No Python (use AffineScript, Rust or Julia; no exceptions)
 
 ## Containers
 
