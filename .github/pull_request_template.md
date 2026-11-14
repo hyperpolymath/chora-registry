@@ -18,7 +18,7 @@
 - [ ] Tests pass (`just test` or equivalent)
 - [ ] Code is formatted (`just fmt` or equivalent)
 - [ ] Linter is clean (no new warnings or errors)
-- [ ] No banned language patterns (no TypeScript, no npm/bun, no Go/Python)
+- [ ] No banned language patterns (no TypeScript or ReScript, no Node/npm as runtime — Bun is tier 1 — no Go/Python)
 - [ ] No `unsafe` blocks without `// SAFETY:` comments
 - [ ] No banned functions (`believe_me`, `unsafeCoerce`, `Obj.magic`, `Admitted`, `sorry`)
 - [ ] SPDX license headers present on all new/modified source files
@@ -30,7 +30,7 @@
 - [ ] `ROADMAP.adoc` updated (if phase progress changed)
 - [ ] An ADR in `docs/decisions/` (if an architectural decision changed)
 - [ ] Documentation updated for user-facing changes
-- [ ] `TOPOLOGY.md` updated (if architecture changed)
+- [ ] `TOPOLOGY.adoc` updated (if architecture changed)
 - [ ] `CHANGELOG` or release notes updated
 - [ ] New dependencies reviewed for license compatibility (MPL-2.0 / MPL-2.0)
 - [ ] ABI/FFI changes validated (`src/interface/abi/` and `src/interface/ffi/` consistent)

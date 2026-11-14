@@ -1,6 +1,6 @@
 # This workflow is managed by gh actions-lock.
 # SPDX-License-Identifier: MPL-2.0
-# in hyperpolymath/standards instead of carrying per-repo copies.
+# in metadatastician/standards instead of carrying per-repo copies.
 #
 # Replaces the per-repo governance scaffolding removed in the same commit:
 #   quality.yml, guix-nix-policy.yml, npm-bun-blocker.yml, ts-blocker.yml,
@@ -122,7 +122,7 @@ jobs:
         run: |
           # Bootstrap rule: standards must test the scripts from its PR tree;
           # consumers use the canonical copies checked out from standards.
-          if [ "$GITHUB_REPOSITORY" = hyperpolymath/standards ]; then
+          if [ "$GITHUB_REPOSITORY" = metadatastician/standards ]; then
             cp scripts/check-actions-policy.sh scripts/check-allowed-actions.sh "$RUNNER_TEMP/"
             cp rhodium-standard-repositories/actions-allowlist/allowed-actions.json \
                "$RUNNER_TEMP/allowed-actions.json"
@@ -295,7 +295,7 @@ jobs:
           # 'high' to only block on high/critical.
           BLOCKING_THRESHOLD: info
         run: |
-          echo "Scanning repository: ${{ github.repository }} (checking baseline)"
+          echo "Scanning repository: ${GITHUB_REPOSITORY} (checking baseline)"
           # Move the baseline filter OUT of the scanned tree, then delete the
           # standards checkout, so `hypatia scan .` only ever sees the CALLER's
           # own files. Without this, `.standards-checkout/` (the tooling we
@@ -403,7 +403,7 @@ jobs:
         # shadow this required gate with a permissive repo-local copy.
         run: |
           SCRIPT=".standards-checkout/scripts/check-ts-allowlist.sh"
-          if [ ! -f "$SCRIPT" ] && [ "$GITHUB_REPOSITORY" = "hyperpolymath/standards" ] \
+          if [ ! -f "$SCRIPT" ] && [ "$GITHUB_REPOSITORY" = "metadatastician/standards" ] \
              && [ -f scripts/check-ts-allowlist.sh ]; then
             SCRIPT="scripts/check-ts-allowlist.sh"
             echo "Using this repository's own copy (standards self-check)."
@@ -631,7 +631,7 @@ jobs:
             fi
           fi
           if [ -n "$FAILED" ]; then
-            echo "See hyperpolymath/standards docs/JS-RUNTIME-POLICY.adoc for remediation."
+            echo "See metadatastician/standards docs/JS-RUNTIME-POLICY.adoc for remediation."
             exit 1
           fi
           echo "✅ No npm/bun violations"
@@ -1131,7 +1131,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Parse every tracked workflow
         run: |
-          if [ "$GITHUB_REPOSITORY" = hyperpolymath/standards ]; then
+          if [ "$GITHUB_REPOSITORY" = metadatastician/standards ]; then
             SCRIPT="tools/policy/check-workflows-parse.sh"
             echo "Using this repository's own copy (standards self-lint)."
           else
@@ -1156,7 +1156,7 @@ jobs:
           # Standards exercises its pull-request scripts; every consumer uses
           # the canonical scripts fetched from this workflow's immutable
           # Standards revision.
-          if [ "$GITHUB_REPOSITORY" = hyperpolymath/standards ]; then
+          if [ "$GITHUB_REPOSITORY" = metadatastician/standards ]; then
             SCRIPT="scripts/check-workflow-duplicate-keys.sh"
             echo "Using this repository's own copy (standards self-lint)."
           else
@@ -1271,7 +1271,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -uo pipefail
-          if [ "$GITHUB_REPOSITORY" = hyperpolymath/standards ]; then
+          if [ "$GITHUB_REPOSITORY" = metadatastician/standards ]; then
             SRC=scripts
             echo "Using this repository's own gate + verifier (standards self-lint)."
           else
@@ -1387,7 +1387,7 @@ jobs:
           # request being tested. Consumers must use the trusted copy from
           # standards@main and cannot substitute a same-named local file.
           # This mirrors the sibling debt-ratchet job below.
-          if [ "${{ github.repository }}" = "hyperpolymath/standards" ]; then
+          if [ "$GITHUB_REPOSITORY" = "metadatastician/standards" ]; then
             cp scripts/check-exemption-ratchet.sh \
                scripts/count-ledger-entries.sh "$RUNNER_TEMP/"
           else
@@ -1450,7 +1450,7 @@ jobs:
           #   not on file existence: a consumer repo that happened to contain a
           #   file at scripts/check-debt-ratchet.sh must NOT be able to
           #   substitute its own gate.
-          if [ "${{ github.repository }}" = "hyperpolymath/standards" ]; then
+          if [ "$GITHUB_REPOSITORY" = "metadatastician/standards" ]; then
             cp scripts/check-debt-ratchet.sh \
                scripts/check-debtfile-structure.sh "$RUNNER_TEMP/"
           else
