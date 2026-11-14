@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MPL-2.0
 # Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
-# Authoritative source: docs/AI-CONVENTIONS.md
+# Authoritative source: docs/practice/AI-CONVENTIONS.adoc
 
 # Read 0-AI-MANIFEST.deed in the repo root FIRST; it points at the repo deed.
 
@@ -23,10 +23,10 @@
 # Rust: transmute (unless FFI with // SAFETY: comment)
 
 # BANNED LANGUAGES
-# TypeScript -> use ReScript
-# Node.js / npm / bun -> use Deno
+# TypeScript, ReScript -> use AffineScript
+# Node.js / yarn -> use Bun (runtime order Bun > Deno > pnpm > npm; npm last resort)
 # Go -> use Rust
-# Python -> use Julia or Rust
+# Python -> use AffineScript, Rust or Julia (no exceptions)
 
 # CONTAINERS
 # Runtime: Podman (never Docker)
