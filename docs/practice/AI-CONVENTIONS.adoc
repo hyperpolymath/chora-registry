@@ -47,12 +47,13 @@ A2ML is retired: NEVER create a `.a2ml` file (`docs/history/A2ML-REMOVED.adoc`).
 
 ## Banned Languages
 
-| Banned              | Use Instead        |
-|---------------------|--------------------|
-| TypeScript          | ReScript           |
-| Node.js / npm / bun | Deno               |
-| Go                  | Rust               |
-| Python              | Julia / Rust       |
+| Banned              | Use Instead                              |
+|---------------------|------------------------------------------|
+| TypeScript          | AffineScript                             |
+| ReScript            | AffineScript                             |
+| Node.js             | Bun (runtimes: Bun > Deno > pnpm > npm)  |
+| Go                  | Rust                                     |
+| Python              | AffineScript / Rust / Julia              |
 
 ## Container Standard
 
