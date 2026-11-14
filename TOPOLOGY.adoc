@@ -1,10 +1,11 @@
-== TOPOLOGY.md — gv-clade-index
+== TOPOLOGY — chora-registry
 
 === Purpose
 
-gv-clade-index is the central registry for the hyperpolymath ecosystem,
-providing a VeriSimDB-backed taxonomy of 200+ repositories organised
-into 12 clades (fv, nl, rm, gv, db, ap, ix, dx, pt, ax, gm, sc). It
+chora-registry (formerly gv-clade-index) is the register of repo identities
+for the hyperpolymath estate. Its seed, verisim/seed/chora-registry_praxis.deed,
+holds each repo's id and its placements in the estate's classification
+schemes, of which the 12-category clade-12 is the first. It
 exposes a Cloudflare Worker API for dashboards, drift detection, and
 work-tracking VCL queries. The index is the canonical map of the
 ecosystem — editing it never modifies the repositories it describes.
@@ -12,7 +13,7 @@ ecosystem — editing it never modifies the repositories it describes.
 === Module Map
 
 ....
-gv-clade-index/
+chora-registry/
 ├── verisim/                     # VeriSimDB instance (clade data store)
 │   ├── config.a2ml                # Database instance configuration
 │   ├── schema/                    # VCL schemas (repo, clade, pointer, etc.)

@@ -17,7 +17,7 @@
 ;; were carried over as the sources held them, not that they were re-audited.
 (descriptile-deed
   :schema-version "1.0.0"
-  :canonical-name "gv-clade-index"
+  :canonical-name "chora-registry"
   :of-chora #uuid"a65b74d8-351a-89d9-a38d-aea470863b03"
   :affirmed "2026-11-14" :affirmed-by agent
   (status
