@@ -85,14 +85,14 @@ jq --arg n "$first" --arg u "$bad" '.by_name[$n].uuid=$u' \
   "$work/repo/worker/data/index.json" > "$work/i.json" && mv "$work/i.json" "$work/repo/worker/data/index.json"
 expect_fail "tampered uuid" "is stale\|uuid for $first"
 
-# 5. A uuid_v8 edited by hand (mirrored the same way)
+# 5. A field retired from /v1 (here the prefixed binomial) served again
+#    (mirrored the same way)
 fresh
-bad8="00000000-0000-8000-8000-000000000000"
-jq --arg n "$first" --arg u "$bad8" 'map(if .name==$n then .uuid_v8=$u else . end)' \
+jq --arg n "$first" 'map(if .name==$n then .prefixed="fv-\($n)" else . end)' \
   "$work/repo/worker/data/repos.json" > "$work/r.json" && mv "$work/r.json" "$work/repo/worker/data/repos.json"
-jq --arg n "$first" --arg u "$bad8" '.by_name[$n].uuid_v8=$u' \
+jq --arg n "$first" '.by_name[$n].prefixed="fv-\($n)"' \
   "$work/repo/worker/data/index.json" > "$work/i.json" && mv "$work/i.json" "$work/repo/worker/data/index.json"
-expect_fail "tampered uuid_v8" "is stale\|uuid_v8 for $first"
+expect_fail "retired /v1 field served" "is stale\|retired from /v1"
 
 
 # 6. Path reuse by the same repo: a repo that moved away and came back is
@@ -112,7 +112,7 @@ plant zz-planted-moved-probe catachresis-colloquium metadatastician/zz-planted-m
   "$(former 1 metadatastician/zz-planted-moved-probe 2026-11-10)"
 regen || { echo "FAIL: [birth id] export failed on a legal move"; exit 1; }
 got=$(jq -r '.[] | select(.name == "zz-planted-moved-probe") | .uuid' "$work/repo/worker/data/repos.json")
-want=$(uuidgen --sha1 --namespace @url --name "github.com/metadatastician/zz-planted-moved-probe")
+want=$(printf 'metadatastician\tzz-planted-moved-probe\n' | bash "$ROOT/sync/uuid-v8.sh")
 [[ "$got" = "$want" ]] || { echo "FAIL: [birth id] moved repo has $got, its birth path gives $want"; exit 1; }
 bash "$work/repo/scripts/check-registry.sh" >/dev/null || { echo "FAIL: [birth id] gate refused a legal move"; exit 1; }
 echo "ok: [birth id] a moved repo keeps the id of its birth path"
@@ -120,7 +120,7 @@ echo "ok: [birth id] a moved repo keeps the id of its birth path"
 # 8. A moved repo whose id was reminted from its current path (the ADR 0007
 #    rule, edited by hand and mirrored into index.json and archive.json)
 fresh
-remint=$(uuidgen --sha1 --namespace @url --name "github.com/metadatastician/standards")
+remint=$(printf 'metadatastician\tstandards\n' | bash "$ROOT/sync/uuid-v8.sh")
 jq --arg u "$remint" 'map(if .name=="standards" then .uuid=$u else . end)' \
   "$work/repo/worker/data/repos.json" > "$work/r.json" && mv "$work/r.json" "$work/repo/worker/data/repos.json"
 jq --arg u "$remint" '.by_name.standards.uuid=$u' \
@@ -228,7 +228,7 @@ expect_fail "unknown category" "refused the seed"
 fresh
 plant zz-planted-v9-probe hyperpolymath hyperpolymath/zz-planted-v9-probe '' chora-registry
 regen || { echo "FAIL: [V9 mint] export refused a chora-registry id"; exit 1; }
-got=$(jq -r '.[] | select(.name == "zz-planted-v9-probe") | .uuid_v8' "$work/repo/worker/data/repos.json")
+got=$(jq -r '.[] | select(.name == "zz-planted-v9-probe") | .uuid' "$work/repo/worker/data/repos.json")
 want=$(printf 'hyperpolymath\tzz-planted-v9-probe\tchora-registry\n' | bash "$ROOT/sync/uuid-v8.sh")
 [[ "$got" = "$want" ]] || { echo "FAIL: [V9 mint] served $got, chora-registry derivation gives $want"; exit 1; }
 bash "$work/repo/scripts/check-registry.sh" >/dev/null || { echo "FAIL: [V9 mint] gate refused a chora-registry id"; exit 1; }

@@ -63,3 +63,28 @@ Evolution policy within the major version:
   frozen.
 * When Phase 5+ adds authenticated endpoints, they join `/v1` (additive);
   auth-tier changes are governed by the same additive-only rule.
+
+== Amendment 2026-11-14: `/v1` reset before its first deploy
+
+Owner ruling of 2026-11-14, by selector in the standards A1 thread.
+
+The additive-only rule exists to protect published consumers. `/v1` has never
+been published: every Worker Deploy run skipped the deploy step for want of
+`CLOUDFLARE_API_TOKEN`, and no code in the estate calls the API. So `/v1` is
+reset to the chora model once, before its first deploy, rather than frozen in
+the clade model and replaced by `/v2`:
+
+* `uuid` is the ADR-008 profile C UUIDv8 of the birth path, in the domain
+  that minted it, served as `minted_in` (standards CHORA-SPEC V9). No UUIDv5
+  is served; `uuid_v8` is dropped, because `uuid` now is that id.
+* `clade` and `secondary` become `placements`: the repo's placements in the
+  registry's classification schemes (A7 W10), today the scheme `clade-12`.
+* `prefixed` (the `<clade>-<name>` binomial) is dropped: a clade is a
+  placement, never part of a repo's name. `/c/{ref}` resolves a canonical
+  name or a uuid; the `CLADE-<binomial>` autolink form is retired.
+* `/v1/llm` reports `registry: chora-registry` and gives each result's name,
+  uuid and placements.
+* `docs/api/openapi.yaml` goes to 2.0.0.
+
+From the first deploy on, the rules above hold unchanged: `/v1` is
+additive-only and a breaking change ships as `/v2`.

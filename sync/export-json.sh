@@ -55,37 +55,39 @@ paste <(sed 's#/#\t#' "$BIRTH") "$DOMAINS" | bash "$SCRIPT_DIR/uuid-v8.sh" > "$I
   || { echo "export-json: sync/uuid-v8.sh failed" >&2; exit 1; }
 [ "$(wc -l < "$IDS")" = "$(wc -l < "$PARSED")" ] \
   || { echo "export-json: uuid-v8.sh returned $(wc -l < "$IDS") ids for $(wc -l < "$PARSED") repos" >&2; exit 1; }
-command -v uuidgen >/dev/null 2>&1 \
-  || { echo "export-json: uuidgen is required (package uuid-runtime / util-linux) for uuid" >&2; exit 1; }
-if ! paste "$PARSED" "$BIRTH" "$IDS" | awk -F'\t' '
+if ! paste "$PARSED" "$BIRTH" "$IDS" "$DOMAINS" | awk -F'\t' '
 BEGIN { printf "[\n" }
 NR > 1 { printf ",\n" }
 {
     name = $1; primary = $2; secondary = $3; lineage = $4; parent = $5; desc = $6
     owner = ($7 != "" ? $7 : "hyperpolymath")
-    birth = $10; uuid_v8 = $11
+    birth = $10; uuid = $11; domain = $12
     # The seed reader decodes deed string escapes, so escape for JSON here:
     # backslash first, then the double quote.
     gsub(/\\/, "\\\\", desc)
     gsub(/"/, "\\\"", desc)
-    # uuid is the UUIDv5 of github.com/<birth path> in the @url namespace. It
-    # is minted once and never changes (ADR 0008, which restores the ADR 0006
-    # immortal rule): a move or rename changes `github`, never the id. The
-    # birth path is not served; it stays in archive.json. uuid_v8 is added
-    # beside uuid under the /v1 additive-only rule; /v2 makes the v8 id the uuid.
-    cmd = "uuidgen --sha1 --namespace @url --name \"github.com/" birth "\""
-    uuid = ""
-    cmd | getline uuid
-    close(cmd)
-    # A failed derivation reads as an empty string, not an error, so check it:
-    # an empty id must stop the export, never reach repos.json.
-    if (uuid == "" || uuid_v8 == "") {
-        printf "export-json: no %s derived for %s\n", (uuid == "" ? "uuid" : "uuid_v8"), birth > "/dev/stderr"
+    # uuid is the ADR-008 profile C UUIDv8 of github.com/<birth path> in the
+    # domain that minted it (minted_in; V9). It is minted once and never
+    # changes (ADR 0008): a move or rename changes `github`, never the id. The
+    # birth path is not served; it stays in archive.json. No UUIDv5 is served
+    # (ADR 0004 pre-publication amendment, owner ruling 2026-11-14).
+    if (uuid == "") {
+        printf "export-json: no uuid derived for %s\n", birth > "/dev/stderr"
         failed = 1; exit 1
+    }
+    # Placements in the classification schemes of the seed (A7 W10). Today it
+    # declares one scheme, clade-12: the primary placement first, then the
+    # ranked ones in rank order.
+    placements = sprintf("{\"scheme\":\"clade-12\",\"category\":\"%s\",\"primary\":true}", primary)
+    list = secondary; gsub(/^\[|\]$/, "", list)
+    n = split(list, cats, /, */)
+    for (i = 1; i <= n; i++) {
+        c = cats[i]; gsub(/"/, "", c)
+        if (c != "") placements = placements sprintf(",{\"scheme\":\"clade-12\",\"category\":\"%s\",\"rank\":%d}", c, i)
     }
     # NB: no separate "owner" key. The github field already carries it as
     # "owner/name".
-    printf "  {\"name\":\"%s\",\"uuid\":\"%s\",\"uuid_v8\":\"%s\",\"clade\":\"%s\",\"secondary\":%s,\"lineage\":\"%s\",\"parent\":\"%s\",\"description\":\"%s\",\"prefixed\":\"%s-%s\",\"github\":\"%s/%s\"}", name, uuid, uuid_v8, primary, secondary, lineage, parent, desc, primary, name, owner, name
+    printf "  {\"name\":\"%s\",\"uuid\":\"%s\",\"minted_in\":\"%s\",\"placements\":[%s],\"lineage\":\"%s\",\"parent\":\"%s\",\"description\":\"%s\",\"github\":\"%s/%s\"}", name, uuid, domain, placements, lineage, parent, desc, owner, name
 }
 END { if (failed) exit 1; printf "\n]\n" }
 ' > "$OUT/repos.json"; then
@@ -164,11 +166,11 @@ fi
   | map((map(select(.kind == "F")) | sort_by(.n)) as $f
         | (map(select(.kind == "R")) | sort_by(.n)) as $r
         | {name: .[0].name, github: .[0].github,
-           uuid: $cur[.[0].name].uuid, uuid_v8: $cur[.[0].name].uuid_v8,
+           uuid: $cur[.[0].name].uuid,
            birth: (if ($f | length) > 0 then $f[0].path else .[0].github end),
            generation: (($f | length) + 1),
            former: ($f | map({generation: .n, github: .path, until: .until})),
-           retired: ($r | map({github: .path, uuid: .uuid, uuid_v8: .uuid_v8, until: .until}))})' \
+           retired: ($r | map({github: .path, uuid: .uuid_v8, uuid_v5: .uuid, until: .until}))})' \
   > "$OUT/archive.json" \
   || { echo "export-json: archive.json export failed" >&2; exit 1; }
 echo "  $(jq length "$OUT/archive.json") repos in the archive"
@@ -205,7 +207,8 @@ jq -n \
   --arg generated "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '
   $repos[0] as $r
   | $clades[0] as $c
-  | ($r | group_by(.clade) | map({key: .[0].clade, value: map(.name)}) | from_entries) as $by_clade
+  | ($r | map(. as $x | {name: $x.name, clade: ($x.placements[] | select(.scheme == "clade-12" and .primary) | .category)})
+       | group_by(.clade) | map({key: .[0].clade, value: map(.name)}) | from_entries) as $by_clade
   | {
       total_repos: ($r | length),
       total_clades: ($c | length),

@@ -89,8 +89,8 @@ policy and its rationale are ADR 0004.
 |Repos matching a tag/keyword (VeriSimDB-backed)
 |yes
 
-|`GET /c/{binomial}`
-|Resolve a `CLADE-<binomial>` autolink — 302 to the portal; `?format=json` for data
+|`GET /c/{ref}`
+|Resolve a repo by canonical name or uuid — 302 to the portal; `?format=json` for data
 |no
 |===
 
@@ -100,7 +100,7 @@ List everything filed under Formal Verification & Proofs:
 
 [source,bash]
 ----
-curl -s "$BASE/v1/repos?clade=fv&limit=200" | jq '.total, (.repos[] | .prefixed)'
+curl -s "$BASE/v1/repos?clade=fv&limit=200" | jq '.total, (.repos[] | .name)'
 ----
 
 Find repos by substance:
@@ -117,11 +117,11 @@ The LLM-friendly shape (what you want when feeding another model):
 curl -s "$BASE/v1/llm?q=reversible%20file%20operations" | jq '.results[].repo'
 ----
 
-Resolve a `CLADE-` autolink the way GitHub issues do:
+Resolve a repo by name or uuid:
 
 [source,bash]
 ----
-curl -s "$BASE/c/fv-haec?format=json" | jq '{name, clade, github_url}'
+curl -s "$BASE/c/haec?format=json" | jq '{name, uuid, placements, github_url}'
 ----
 
 == Responses & errors

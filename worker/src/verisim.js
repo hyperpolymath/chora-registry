@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
 //
-// VeriSimDB client for gv-clade-index Cloudflare Worker.
+// VeriSimDB client for the chora-registry Cloudflare Worker.
 //
 // Collection namespaces used:
 //   clade:repos   — all 202+ hyperpolymath repos with clade metadata
@@ -25,6 +25,7 @@
 //   ping(env, log)                      -> { verisimdb: bool, kv: bool }
 
 import { log as moduleLog } from './log.js';
+import { cladeCodes, primaryClade } from './placements.js';
 
 const API_PREFIX = '/api/v1';
 const COL_REPOS = 'clade:repos';
@@ -139,8 +140,9 @@ function buildIndex(repos, clades) {
   const byClade = {};
   for (const repo of repos) {
     byName[repo.name] = repo;
-    if (!byClade[repo.clade]) byClade[repo.clade] = [];
-    byClade[repo.clade].push(repo.name);
+    const code = primaryClade(repo);
+    if (!byClade[code]) byClade[code] = [];
+    byClade[code].push(repo.name);
   }
   return {
     total_repos: repos.length,
@@ -270,8 +272,7 @@ async function queryByTag(env, tag, log = moduleLog) {
   if (docs.length > 0) {
     return docs
       .filter((repo) => {
-        const secondaryStr = (repo.secondary || []).join(' ');
-        return `${repo.name} ${repo.description || ''} ${repo.clade || ''} ${secondaryStr}`
+        return `${repo.name} ${repo.description || ''} ${cladeCodes(repo).join(' ')}`
           .toLowerCase()
           .includes(q);
       })
@@ -285,9 +286,8 @@ async function queryByTag(env, tag, log = moduleLog) {
       for (const c of index.clades || []) cladeKeywords[c.code] = c.keywords || [];
       return Object.values(index.by_name || {})
         .filter((repo) => {
-          const keywords = cladeKeywords[repo.clade] || [];
-          const secondaryStr = (repo.secondary || []).join(' ');
-          return [repo.name, repo.description || '', repo.clade || '', secondaryStr, ...keywords]
+          const keywords = cladeKeywords[primaryClade(repo)] || [];
+          return [repo.name, repo.description || '', ...cladeCodes(repo), ...keywords]
             .join(' ')
             .toLowerCase()
             .includes(q);

@@ -10,6 +10,7 @@ import path from 'node:path';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import worker from '../src/index.js';
+import { primaryClade } from '../src/placements.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const INDEX = JSON.parse(readFileSync(path.join(here, '../data/index.json'), 'utf8'));
@@ -137,7 +138,7 @@ describe('repos', () => {
   it('GET /v1/repos?clade=fv → filtered to one clade', async () => {
     const { res, body } = await call('/v1/repos?clade=fv&limit=200');
     expect(res.status).toBe(200);
-    expect(body.repos.every((r) => r.clade === 'fv')).toBe(true);
+    expect(body.repos.every((r) => primaryClade(r) === 'fv')).toBe(true);
   });
 
   it('GET /v1/repos?clade=zz → 400 invalid clade', async () => {
@@ -177,7 +178,30 @@ describe('search & llm', () => {
     const { res, body } = await call('/v1/llm?q=proof');
     expect(res.status).toBe(200);
     expect(body.ecosystem).toBe('hyperpolymath');
+    expect(body.registry).toBe('chora-registry');
     expect(body.results.length).toBeLessThanOrEqual(10);
+    for (const r of body.results) {
+      expect(r).not.toHaveProperty('clade');
+      expect(Array.isArray(r.placements)).toBe(true);
+    }
+  });
+});
+
+describe('/c/:ref resolver', () => {
+  it('resolves a canonical name and a uuid to the same repo', async () => {
+    const repo = Object.values(INDEX.by_name)[0];
+    const byName = await call(`/c/${encodeURIComponent(repo.name)}?format=json`);
+    const byId = await call(`/c/${repo.uuid}?format=json`);
+    expect(byName.res.status).toBe(200);
+    expect(byId.res.status).toBe(200);
+    expect(byId.body.name).toBe(repo.name);
+    expect(byId.body.clade_name).toBe(byName.body.clade_name);
+  });
+
+  it('no longer resolves a prefixed binomial', async () => {
+    const repo = Object.values(INDEX.by_name).find((r) => primaryClade(r) === 'fv');
+    const { res } = await call(`/c/fv-${encodeURIComponent(repo.name)}?format=json`);
+    expect(res.status).toBe(404);
   });
 });
 

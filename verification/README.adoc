@@ -17,8 +17,9 @@ Correctness is assured by executable evidence appropriate to a data/edge service
 * *Data-integrity invariants* — `worker/test/data.test.js` asserts the registry's
   "theorems": the 12-clade invariant; count consistency
   (`total_repos == |by_name| == Σ member_count`); every clade member resolves;
-  `prefixed == "<clade>-<name>"`; valid secondary codes; and forge primary-key
-  (`github`) + `uuid` uniqueness.
+  one primary clade-12 placement per repo with valid, distinct, ranked others;
+  no field retired from `/v1` served; and forge primary-key (`github`) + `uuid`
+  (UUIDv8) uniqueness.
 * *CI gate* — `.github/workflows/worker-ci.yml` runs these on every PR.
 
 == When real proofs would apply
