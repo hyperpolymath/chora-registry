@@ -26,6 +26,7 @@ import { json, error, makeRequestId, corsHeaders, SECURITY_HEADERS, withCors } f
 import { isValidClade, VALID_CLADES, positiveInt, safeDecode, boundedQuery } from './validate.js';
 import { allow } from './ratelimit.js';
 import { createLogger } from './log.js';
+import { primaryClade } from './placements.js';
 
 const VERSION = '0.1.0';
 
@@ -41,7 +42,7 @@ const ENDPOINT_DOCS = {
   '/v1/query/tag?q=...': 'Query repos by tag (VeriSimDB)',
   '/v1/health': 'Liveness check',
   '/v1/ready': 'Readiness check (backing-store health)',
-  '/c/:binomial': 'Resolve a CLADE-<binomial> autolink (302 to portal; ?format=json for data)',
+  '/c/:ref': 'Resolve a repo by canonical name or uuid (302 to portal; ?format=json for data)',
 };
 
 // Simple text search across name + description + clade.
@@ -53,7 +54,7 @@ function searchRepos(index, query) {
 
   const results = [];
   for (const [name, repo] of Object.entries(index.by_name)) {
-    const searchable = `${name} ${repo.description || ''} ${repo.clade || ''}`.toLowerCase();
+    const searchable = `${name} ${repo.description || ''} ${primaryClade(repo)}`.toLowerCase();
     const score = terms.reduce((acc, term) => (searchable.includes(term) ? acc + 1 : acc), 0);
     if (score > 0) results.push({ ...repo, score });
   }
@@ -170,11 +171,12 @@ async function route(request, env, log, requestId) {
     if (name === null) return error('Malformed repo name', { status: 400, requestId });
     const repo = index.by_name[name];
     if (!repo) return error(`Repo '${name}' not found`, { requestId });
-    const clade = index.clades.find((c) => c.code === repo.clade);
+    const code = primaryClade(repo);
+    const clade = index.clades.find((c) => c.code === code);
     return json(
       {
         ...repo,
-        clade_name: clade ? clade.name : repo.clade,
+        clade_name: clade ? clade.name : code,
         clade_colour: clade ? clade.colour : null,
         github_url: `https://github.com/${repo.github}`,
         portal_url: `https://hyperpolymath.github.io/#/project/${name}`,
@@ -183,23 +185,26 @@ async function route(request, env, log, requestId) {
     );
   }
 
-  // GET /c/:binomial — short resolver for the estate-wide CLADE-<binomial>
-  // custom autolink (e.g. an issue mentioning CLADE-fv-proven links here).
-  // Resolves by prefixed-name (the binomial) first, then canonical name.
+  // GET /c/:ref — short resolver: a repo by canonical name or by uuid (its
+  // v8 id). The prefixed binomial (CLADE-fv-proven) is retired with the old
+  // clade model (ADR 0004 amendment): a clade is a placement, never a name.
   // Humans get a 302 to the portal; bots can ask for JSON with ?format=json.
-  const cladeRefMatch = path.match(/^\/c\/(.+)$/);
-  if (cladeRefMatch) {
-    const ref = safeDecode(cladeRefMatch[1]);
-    if (ref === null) return error('Malformed clade reference', { status: 400, requestId });
+  const refMatch = path.match(/^\/c\/(.+)$/);
+  if (refMatch) {
+    const ref = safeDecode(refMatch[1]);
+    if (ref === null) return error('Malformed repo reference', { status: 400, requestId });
     const repo =
-      Object.values(index.by_name).find((r) => r.prefixed === ref) || index.by_name[ref] || null;
-    if (!repo) return error(`No repo for clade reference '${ref}'`, { requestId });
+      index.by_name[ref] ||
+      Object.values(index.by_name).find((r) => r.uuid === ref.toLowerCase()) ||
+      null;
+    if (!repo) return error(`No repo for reference '${ref}'`, { requestId });
     if (url.searchParams.get('format') === 'json') {
-      const clade = index.clades.find((c) => c.code === repo.clade);
+      const code = primaryClade(repo);
+      const clade = index.clades.find((c) => c.code === code);
       return json(
         {
           ...repo,
-          clade_name: clade ? clade.name : repo.clade,
+          clade_name: clade ? clade.name : code,
           github_url: `https://github.com/${repo.github}`,
           portal_url: `https://hyperpolymath.github.io/#/project/${repo.name}`,
         },
@@ -231,7 +236,7 @@ async function route(request, env, log, requestId) {
     const offset = (page - 1) * limit;
 
     let repos = Object.values(index.by_name);
-    if (cladeFilter) repos = repos.filter((r) => r.clade === cladeFilter);
+    if (cladeFilter) repos = repos.filter((r) => primaryClade(r) === cladeFilter);
     repos.sort((a, b) => a.name.localeCompare(b.name));
 
     const total = repos.length;
@@ -273,10 +278,10 @@ async function route(request, env, log, requestId) {
     const top = results.slice(0, 10);
 
     const relationships = [];
-    const clades = new Set(top.map((r) => r.clade));
+    const clades = new Set(top.map((r) => primaryClade(r)));
     if (clades.size > 1) {
       for (const c of clades) {
-        const inClade = top.filter((r) => r.clade === c);
+        const inClade = top.filter((r) => primaryClade(r) === c);
         if (inClade.length > 1) {
           relationships.push({ type: 'same-clade', clade: c, repos: inClade.map((r) => r.name) });
         }
@@ -287,12 +292,12 @@ async function route(request, env, log, requestId) {
       {
         query: q.value,
         ecosystem: 'hyperpolymath',
-        registry: 'gv-clade-index',
+        registry: 'chora-registry',
         results: top.map((r) => ({
-          repo: r.prefixed,
-          canonical_name: r.name,
+          repo: r.name,
+          uuid: r.uuid,
           summary: r.description,
-          clade: r.clade,
+          placements: r.placements,
           lineage: r.lineage,
           github_url: `https://github.com/${r.github}`,
           portal_url: `https://hyperpolymath.github.io/#/project/${r.name}`,

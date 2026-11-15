@@ -23,7 +23,7 @@ jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
 
 info:
   title: Clade Registry API
-  version: 1.3.0
+  version: 2.0.0
   summary: >-
     Read-only registry mapping the hyperpolymath ecosystem's repositories to
     clade groupings. Map and territory — this is the map.
@@ -102,7 +102,7 @@ tags:
   - name: query
     description: VeriSimDB-backed attribute queries (rate-limited)
   - name: resolver
-    description: CLADE-<binomial> autolink resolution
+    description: Repo resolution by canonical name or uuid
 
 security: []   # PUBLIC tier today; per-operation overrides below when tiers land
 
@@ -241,10 +241,11 @@ paths:
     get:
       tags: [registry]
       operationId: getRepo
-      summary: Single repo detail (canonical name or prefixed binomial)
+      summary: Single repo detail (canonical name)
       description: |
-        Resolves by canonical name (`haec`) — the prefixed binomial
-        (`fv-haec`) is accepted by `/c/{binomial}`, not here. Adds
+        Resolves by canonical name (`haec`); `/c/{ref}` also accepts the
+        repo's uuid. `clade_name` and `clade_colour` describe the primary
+        clade-12 placement. Adds
         `clade_name`, `clade_colour`, `github_url` and `portal_url` to the
         base repo record.
       parameters:
@@ -364,8 +365,8 @@ paths:
       operationId: llmSearch
       summary: Structured output optimised for LLM consumption (rate-limited)
       description: |
-        Top 10 matches, each reduced to the fields an LLM needs (binomial,
-        summary, clade, canonical URLs), plus inferred `relationships` between
+        Top 10 matches, each reduced to the fields an LLM needs (name, uuid,
+        summary, placements, canonical URLs), plus inferred `relationships` between
         result rows (currently `same-clade` groupings when ≥2 results share a
         clade). This is the endpoint the LLM tier will upgrade in Phase 5
         (API-key auth + higher limits); today it is public.
@@ -461,21 +462,22 @@ paths:
               schema: { $ref: '#/components/schemas/Error' }
         default: { $ref: '#/components/responses/ApiError' }
 
-  /c/{binomial}:
+  /c/{ref}:
     get:
       tags: [resolver]
-      operationId: resolveCladeRef
-      summary: Resolve a CLADE-<binomial> autolink
+      operationId: resolveRepoRef
+      summary: Resolve a repo by canonical name or uuid
       description: |
-        Resolves the estate's `CLADE-<binomial>` custom autolinks (e.g. an
-        issue mentioning `CLADE-fv-haec` links here). Looks up by prefixed
-        binomial first, then canonical name. Humans get a `302` to the portal
-        page; bots pass `?format=json` for the data inline.
+        Looks up by canonical name (`haec`), then by uuid. The prefixed
+        binomial (`fv-haec`) is retired with the old clade model (ADR 0004
+        amendment of 2026-11-14): a clade is a placement, never part of a
+        name. Humans get a `302` to the portal page; bots pass
+        `?format=json` for the data inline.
       parameters:
-        - name: binomial
+        - name: ref
           in: path
           required: true
-          description: Prefixed binomial (`fv-haec`) or canonical repo name (`haec`)
+          description: Canonical repo name (`haec`) or the repo's uuid
           schema:
             type: string
             minLength: 1
@@ -588,20 +590,40 @@ components:
     CladeCode:
       type: string
       description: |
-        Two-letter clade code from the closed 12-code taxonomy: fv, nl, rm,
-        gv, db, ap, ix, dx, pt, ax, gm, sc. The letters abbreviate the clade
-        NAME (never the repo name) — see verisim/seed/clades.a2ml.
+        Two-letter category code of the clade-12 scheme: fv, nl, rm, gv, db,
+        ap, ix, dx, pt, ax, gm, sc. The letters abbreviate the category NAME
+        (never the repo name). The scheme is declared in
+        verisim/seed/chora-registry_praxis.deed.
       enum: [fv, nl, rm, gv, db, ap, ix, dx, pt, ax, gm, sc]
     Uuid:
       type: string
       format: uuid
       description: >-
-        Deterministic UUIDv5 over `github.com/<owner>/<name>` at the repository's birth path, in the @url namespace. Minted once and never changed (ADR 0008, which supersedes ADR 0007): a move or rename changes `github` only, and a clade change never touches it. The birth path is not served. An id the registry once served and withdrew is never minted again.
-    UuidV8:
+        ADR-008 profile C UUIDv8 (version 8, variant 10) of `github.com/<owner>/<name>` at the repository's birth path, in the domain that minted it (`minted_in`; owner ruling V9). Minted once and never changed (ADR 0008): a move or rename changes `github` only, and a placement change never touches it. The birth path is not served. An id the registry once derived and withdrew is never minted again. No UUIDv5 is served: `/v1` was reset to this shape before its first deploy (ADR 0004 amendment, 2026-11-14).
+    MintingDomain:
       type: string
-      format: uuid
+      description: ADR-008 profile C domain that minted the id (V9). `gv-clade-index` for a repo born before V9 or registered late under L1; `chora-registry` for one born after V9.
+      enum: [gv-clade-index, chora-registry]
+    Placement:
+      type: object
       description: >-
-        ADR-008 profile C UUIDv8 of `github.com/<owner>/<name>` at the birth path, in the `gv-clade-index` domain (owner ruling D320). Added beside `uuid` under the additive-only `/v1` rule (ADR 0004); `/v2` makes it the `uuid`. Like `uuid`, it is minted once and never changed (ADR 0008). A deed carries it as an opaque value, not as the path it was derived from.
+        Where the repo sits in one of the registry's classification schemes (A7 W10). An identity fact, never the id and never an edict. Exactly one placement per scheme is primary; the others carry a rank 1..n.
+      required: [scheme, category]
+      properties:
+        scheme:
+          type: string
+          description: Scheme id (today `clade-12`)
+          example: clade-12
+        category:
+          type: string
+          description: Category id in that scheme (for clade-12, a CladeCode)
+          example: fv
+        primary:
+          type: boolean
+          const: true
+        rank:
+          type: integer
+          minimum: 1
     Iso8601:
       type: string
       format: date-time
@@ -613,18 +635,17 @@ components:
     # ── core objects ──────────────────────────────────────────────────────
     Repo:
       type: object
-      required: [name, uuid, clade, secondary, lineage, prefixed, github]
+      required: [name, uuid, minted_in, placements, lineage, github]
       properties:
         name:
           type: string
           description: Canonical name — the registry's primary key
         uuid: { $ref: '#/components/schemas/Uuid' }
-        uuid_v8: { $ref: '#/components/schemas/UuidV8' }
-        clade: { $ref: '#/components/schemas/CladeCode' }
-        secondary:
+        minted_in: { $ref: '#/components/schemas/MintingDomain' }
+        placements:
           type: array
-          items: { $ref: '#/components/schemas/CladeCode' }
-          description: Zero or more secondary clade codes
+          items: { $ref: '#/components/schemas/Placement' }
+          description: The repo's placements, primary first, then by rank
         lineage: { $ref: '#/components/schemas/RepoLineage' }
         parent:
           type: string
@@ -632,10 +653,6 @@ components:
         description:
           type: string
           description: One-line substance description (may be empty)
-        prefixed:
-          type: string
-          description: '<clade>-<name> binomial used by CLADE- autolinks'
-          example: fv-haec
         github:
           type: string
           description: '<owner>/<name> on GitHub'
@@ -810,22 +827,24 @@ components:
           enum: [hyperpolymath]
         registry:
           type: string
-          enum: [gv-clade-index]
+          enum: [chora-registry]
         results:
           type: array
           maxItems: 10
           items:
             type: object
-            required: [repo, canonical_name, summary, clade, lineage, github_url, portal_url]
+            required: [repo, uuid, summary, placements, lineage, github_url, portal_url]
             properties:
               repo:
                 type: string
-                description: Prefixed binomial (what CLADE- autolinks use)
-              canonical_name: { type: string }
+                description: Canonical repo name
+              uuid: { $ref: '#/components/schemas/Uuid' }
               summary:
                 type: string
                 description: Repo description (may be empty)
-              clade: { $ref: '#/components/schemas/CladeCode' }
+              placements:
+                type: array
+                items: { $ref: '#/components/schemas/Placement' }
               lineage: { $ref: '#/components/schemas/RepoLineage' }
               github_url: { type: string, format: uri }
               portal_url: { type: string, format: uri }

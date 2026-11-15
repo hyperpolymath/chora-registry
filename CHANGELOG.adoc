@@ -8,6 +8,20 @@ https://semver.org/spec/v2.0.0.html[Semantic Versioning].
 
 === [Unreleased]
 
+==== Changed (breaking, before the first deploy)
+
+* *`/v1` reset to the chora model* (ADR 0004 amendment, owner ruling of
+  2026-11-14). `/v1` was never deployed, so it changes in place:
+** `uuid` is the UUIDv8 of the birth path; `minted_in` names its domain
+   (`gv-clade-index` or `chora-registry`). No UUIDv5 is served and
+   `uuid_v8` is gone.
+** `clade` and `secondary` become `placements`
+   (`[{scheme, category, primary|rank}]`, scheme `clade-12`).
+** `prefixed` is gone; `/c/{ref}` resolves a canonical name or a uuid, not
+   a `CLADE-<binomial>`.
+** `/v1/llm` reports `registry: chora-registry`.
+** `docs/api/openapi.yaml` 2.0.0.
+
 ==== Added
 
 * *`uuid_v8` on every registry entry* (standards ADR-008, owner ruling
