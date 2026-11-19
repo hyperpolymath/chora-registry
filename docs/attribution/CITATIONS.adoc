@@ -1,34 +1,34 @@
-= gv-clade-index - Citation Guide
+= chora-registry - Citation Guide
 :toc:
 
 == BibTeX
 
 [source,bibtex]
 ----
-@software{gv-clade-index_2026,
+@software{chora-registry_2026,
   author = {Jewell, Jonathan},
-  title = {gv-clade-index},
+  title = {chora-registry},
   year = {2026},
-  url = {https://github.com/hyperpolymath/gv-clade-index},
+  url = {https://github.com/hyperpolymath/chora-registry},
   license = {MPL-2.0}
 }
 ----
 
 == Harvard Style
 
-Jewell, JDAJ (2026) _gv-clade-index_ [Computer software]. Available at: https://github.com/hyperpolymath/gv-clade-index
+Jewell, JDAJ (2026) _chora-registry_ [Computer software]. Available at: https://github.com/hyperpolymath/chora-registry
 
 == OSCOLA
 
-Jonathan D.A. Jewell, 'gv-clade-index' (2026) <https://github.com/hyperpolymath/gv-clade-index>
+Jonathan D.A. Jewell, 'chora-registry' (2026) <https://github.com/hyperpolymath/chora-registry>
 
 == MLA
 
-Jewell, Jonathan "gv-clade-index." 2026, github.com/hyperpolymath/gv-clade-index.
+Jewell, Jonathan "chora-registry." 2026, github.com/hyperpolymath/chora-registry.
 
 == APA 7
 
-Jewell, JDAJ (2026). _gv-clade-index_ [Computer software]. GitHub. https://github.com/hyperpolymath/gv-clade-index
+Jewell, JDAJ (2026). _chora-registry_ [Computer software]. GitHub. https://github.com/hyperpolymath/chora-registry
 
 == See Also
 

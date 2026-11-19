@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: CC-BY-SA-4.0
-= gv-clade-index — Quick Start for Users
+= chora-registry — Quick Start for Users
 :toc:
 :icons: font
 
-== What is gv-clade-index?
+== What is chora-registry?
 
 The clade index is the central *registry* for the hyperpolymath ecosystem — a
 queryable taxonomy of 200+ repositories across 12 clades. It is the *map*:

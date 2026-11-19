@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: MPL-2.0
-# eclexiaiser manifest for gv-clade-index
+# eclexiaiser manifest for chora-registry
 
 [project]
-name = "gv-clade-index"
+name = "chora-registry"
 
 [[functions]]
 name = "main"

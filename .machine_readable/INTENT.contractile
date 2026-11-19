@@ -1,5 +1,5 @@
 ; SPDX-License-Identifier: MPL-2.0
-; INTENT.contractile — Purpose and scope for gv-clade-index
+; INTENT.contractile — Purpose and scope for chora-registry
 ; Helps LLM/SLM agents understand what this repo IS and IS NOT.
 ;
 ; Part of the contractile family: MUST, TRUST, DUST, INTENT, ADJUST
@@ -31,7 +31,7 @@
 
 (intent-contractile
   (version "1.0.0")
-  (repo "gv-clade-index")
+  (repo "chora-registry")
 
   ; === Purpose (what this repo IS) ===
   (purpose

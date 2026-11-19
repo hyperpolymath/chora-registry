@@ -74,14 +74,14 @@ info:
     | BOT    | signed JWT (per bot)  | write observations, findings    | 2000 req/min| no (Phase 6)   |
   contact:
     name: hyperpolymath
-    url: https://github.com/hyperpolymath/gv-clade-index
+    url: https://github.com/hyperpolymath/chora-registry
   license:
     name: MPL-2.0
     url: https://www.mozilla.org/en-US/MPL/2.0/
 
 externalDocs:
   description: User guide (docs/USER-API-GUIDE.adoc) and the registry itself
-  url: https://github.com/hyperpolymath/gv-clade-index
+  url: https://github.com/hyperpolymath/chora-registry
 
 servers:
   # Not yet deployed (Phase 3). The host below is the wrangler.toml service
@@ -741,7 +741,7 @@ components:
         source:
           type: string
           format: uri
-          example: https://github.com/hyperpolymath/gv-clade-index
+          example: https://github.com/hyperpolymath/chora-registry
     Health:
       type: object
       required: [status, service, version, timestamp]

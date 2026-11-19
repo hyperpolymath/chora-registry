@@ -1,6 +1,6 @@
 = ABI/FFI — Not Applicable
 
-`gv-clade-index` is a JavaScript Cloudflare Worker over a VeriSimDB/KV registry
+`chora-registry` is a JavaScript Cloudflare Worker over a VeriSimDB/KV registry
 (a `gv` / `db` project). It has *no native ABI or FFI surface*: there are no
 Idris2 ABI definitions and no Zig FFI bindings to document here.
 

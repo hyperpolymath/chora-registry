@@ -1,7 +1,7 @@
 ;; SPDX-License-Identifier: MPL-2.0
 ;; SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ;;
-;; STATE.deed of gv-clade-index (A7 J14, J15; profile deed_lint.js --state).
+;; STATE.deed of chora-registry (A7 J14, J15; profile deed_lint.js --state).
 ;;
 ;; (status) is the [status] block of the retired .machine_readable/CLADE.a2ml,
 ;; field for field, under standards 1-formats/deed/mappings/clade-to-repo-deed.adoc

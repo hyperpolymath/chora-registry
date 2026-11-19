@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: CC-BY-SA-4.0
 // Template: QUICKSTART-MAINTAINER.adoc — packaging, deploying, and maintaining
-// Replace gv-clade-index, gv-clade-index, Node toolchain (worker/), VeriSimDB with actuals
-= gv-clade-index — Quick Start for Platform Maintainers
+// Replace chora-registry, chora-registry, Node toolchain (worker/), VeriSimDB with actuals
+= chora-registry — Quick Start for Platform Maintainers
 :toc:
 :toclevels: 2
 
 == Overview
 
-This guide covers packaging, deploying, and maintaining gv-clade-index for
+This guide covers packaging, deploying, and maintaining chora-registry for
 distribution on your platform.
 
 == Runtime Dependencies
@@ -18,8 +18,8 @@ Node toolchain (worker/), VeriSimDB
 
 [source,bash]
 ----
-git clone https://github.com/hyperpolymath/gv-clade-index.git
-cd gv-clade-index
+git clone https://github.com/hyperpolymath/chora-registry.git
+cd chora-registry
 just build-release
 ----
 
@@ -46,7 +46,7 @@ nix build
 [source,bash]
 ----
 just stapeln-export    # Generates Containerfile
-podman build -t gv-clade-index .
+podman build -t chora-registry .
 ----
 
 === Manual Package
@@ -65,10 +65,10 @@ Files installed:
 | `$PREFIX/bin/`
 | Executables
 
-| `$PREFIX/share/gv-clade-index/`
+| `$PREFIX/share/chora-registry/`
 | Data files, assets
 
-| `$PREFIX/share/doc/gv-clade-index/`
+| `$PREFIX/share/doc/chora-registry/`
 | Documentation
 
 | `$PREFIX/share/applications/`
@@ -80,9 +80,9 @@ Files installed:
 
 == Configuration
 
-Default config location: `$XDG_CONFIG_HOME/gv-clade-index/config.toml`
+Default config location: `$XDG_CONFIG_HOME/chora-registry/config.toml`
 
-Fallback: `$HOME/.config/gv-clade-index/config.toml`
+Fallback: `$HOME/.config/chora-registry/config.toml`
 
 == Health Checks
 
@@ -102,7 +102,7 @@ just build-release
 just install --prefix=/usr/local
 ----
 
-Or via OPSM: `opsm update gv-clade-index`
+Or via OPSM: `opsm update chora-registry`
 
 == Security Notes
 
@@ -117,13 +117,13 @@ For deploying multiple instances (e.g., different users or tenants):
 
 [source,bash]
 ----
-just install --prefix=/opt/gv-clade-index-instance1 --config=/etc/gv-clade-index/instance1.toml
-just install --prefix=/opt/gv-clade-index-instance2 --config=/etc/gv-clade-index/instance2.toml
+just install --prefix=/opt/chora-registry-instance1 --config=/etc/chora-registry/instance1.toml
+just install --prefix=/opt/chora-registry-instance2 --config=/etc/chora-registry/instance2.toml
 ----
 
 Each instance has isolated config, data, and logs.
 
 == Reporting Issues
 
-* Upstream: https://github.com/hyperpolymath/gv-clade-index/issues
+* Upstream: https://github.com/hyperpolymath/chora-registry/issues
 * With diagnostic: `just help-me` (pre-fills context)

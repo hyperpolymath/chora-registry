@@ -3,7 +3,7 @@
 
 ## Our Pledge
 
-We as members, contributors, and leaders pledge to make participation in gv-clade-index a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, colour, religion, or sexual identity and orientation.
+We as members, contributors, and leaders pledge to make participation in chora-registry a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, colour, religion, or sexual identity and orientation.
 
 We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
@@ -291,7 +291,7 @@ We thank these communities for their leadership in creating welcoming spaces.
 
 If you have questions about this Code of Conduct:
 
-- Open a [Discussion](https://github.com/hyperpolymath/gv-clade-index/discussions) (for general questions)
+- Open a [Discussion](https://github.com/hyperpolymath/chora-registry/discussions) (for general questions)
 - Email j.d.a.jewell@open.ac.uk (for private questions)
 - Contact any maintainer directly
 

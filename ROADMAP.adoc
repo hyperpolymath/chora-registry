@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CC-BY-SA-4.0
-= gv-clade-index Roadmap
+= chora-registry Roadmap
 
 The phase plan (it mirrored `STATE.a2ml` until A2ML was retired). The registry
 is the *map* of the hyperpolymath ecosystem; "production" means a hardened, observable,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CC-BY-SA-4.0
 // Template: QUICKSTART-DEV.adoc — clone → build → test → PR
-// Replace gv-clade-index, cd worker && npm install, cd worker && npm test, JavaScript (Cloudflare Worker) + A2ML/VQL data + bash tooling with actuals
-= gv-clade-index — Quick Start for Developers
+// Replace chora-registry, cd worker && npm install, cd worker && npm test, JavaScript (Cloudflare Worker) + A2ML/VQL data + bash tooling with actuals
+= chora-registry — Quick Start for Developers
 :toc:
 :toclevels: 2
 
@@ -29,8 +29,8 @@ nix develop
 
 [source,bash]
 ----
-git clone https://github.com/hyperpolymath/gv-clade-index.git
-cd gv-clade-index
+git clone https://github.com/hyperpolymath/chora-registry.git
+cd chora-registry
 just setup-dev
 ----
 
@@ -52,7 +52,7 @@ cd worker && npm test
 
 [source]
 ----
-gv-clade-index/
+chora-registry/
 ├── src/                  # Source code
 ├── src/interface/abi/    # Idris2 ABI definitions (if applicable)
 ├── ffi/zig/              # Zig FFI bridge (if applicable)
@@ -107,5 +107,5 @@ Or read `0-AI-MANIFEST.deed` and `chora-registry_chora.deed` directly.
 == Get Help
 
 * **Architecture**: link:EXPLAINME.adoc[EXPLAINME.adoc]
-* **Wiki**: https://github.com/hyperpolymath/gv-clade-index/wiki
+* **Wiki**: https://github.com/hyperpolymath/chora-registry/wiki
 * **Report issue**: `just help-me`
