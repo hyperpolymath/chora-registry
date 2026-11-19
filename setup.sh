@@ -1,12 +1,12 @@
 #!/bin/sh
 # SPDX-License-Identifier: MPL-2.0
-# setup.sh — Universal setup script for gv-clade-index
+# setup.sh — Universal setup script for chora-registry
 #
 # Detects your shell, platform, and installs prerequisites.
 # Then hands off to `just setup` for project-specific configuration.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/hyperpolymath/gv-clade-index/main/setup.sh -o setup.sh && sh setup.sh
+#   curl -fsSL https://raw.githubusercontent.com/hyperpolymath/chora-registry/main/setup.sh -o setup.sh && sh setup.sh
 #   # or after cloning:
 #   ./setup.sh
 #
@@ -202,7 +202,7 @@ install_just() {
 
 # ── Main ──
 main() {
-    printf "%s=== gv-clade-index Setup ===%s\n\n" "$BOLD" "$RESET"
+    printf "%s=== chora-registry Setup ===%s\n\n" "$BOLD" "$RESET"
 
     # Detect environment
     SHELL_NAME=$(detect_shell)
@@ -233,8 +233,8 @@ main() {
     # Step 2: Check if we're in the repo directory
     if [ ! -f "Justfile" ] && [ ! -f "justfile" ]; then
         warn "Not in a repo directory (no Justfile found)"
-        info "Clone first: git clone https://github.com/hyperpolymath/gv-clade-index.git"
-        info "Then: cd gv-clade-index && ./setup.sh"
+        info "Clone first: git clone https://github.com/hyperpolymath/chora-registry.git"
+        info "Then: cd chora-registry && ./setup.sh"
         exit 1
     fi
 

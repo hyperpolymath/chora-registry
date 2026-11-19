@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MPL-2.0
 #
-# Svalinn gatekeeper policy for gv-clade-index
+# Svalinn gatekeeper policy for chora-registry
 #
 # Controls which operations are permitted through the edge gateway.
 # This template provides moderate security defaults — not wide-open test

@@ -1,10 +1,10 @@
 {
   "groove_version": "1.0.0",
-  "service_id": "gv-clade-index",
+  "service_id": "chora-registry",
   "name": "Hyperpolymath Clade Registry API",
   "description": "Read-only API and central registry — the map of the hyperpolymath ecosystem (12 clades, 200+ repos).",
   "clade": "gv",
-  "repository": "https://github.com/hyperpolymath/gv-clade-index",
+  "repository": "https://github.com/hyperpolymath/chora-registry",
   "license": "MPL-2.0",
   "maintainer": "hyperpolymath",
   "protocol": "https",

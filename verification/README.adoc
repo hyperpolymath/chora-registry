@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: CC-BY-SA-4.0
-= Verification Pillar — gv-clade-index
+= Verification Pillar — chora-registry
 
 == Status: no formal-proof surface
 
-gv-clade-index is a `gv`/`db` project — a JavaScript Cloudflare Worker over a
+chora-registry is a `gv`/`db` project — a JavaScript Cloudflare Worker over a
 VeriSimDB/KV registry. It has *no native ABI/FFI surface*, so there are no Idris2 /
 Lean / Coq / Agda proofs to maintain here, and none are outstanding. The template
 ABI proofs that once implied otherwise were removed; see `PROOF-NEEDS.md`.

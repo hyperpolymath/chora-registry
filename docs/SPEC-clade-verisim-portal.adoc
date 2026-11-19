@@ -150,6 +150,8 @@ januskey:
   Clade membership tracked in VeriSimDB only, no prefix rename.
 * **Monorepo children**: Sub-projects within monorepos (e.g., `reposystem/contractiles/`)
   do not get prefixed. Their parent gets the prefix. VeriSimDB tracks them as children.
+* **The registry itself** (`chora-registry`): named after the chora it registers, not
+  its clade. Its clade `gv` is recorded in its deed, with no prefix rename.
 
 == Identity Model
 
@@ -415,13 +417,13 @@ None of these require GitHub literacy, git knowledge, or repository access.
 
 === Name and Location
 
-`gv-clade-index` — top-level repository, clade `gv` (governance).
+`chora-registry` — top-level repository, clade `gv` (governance).
 
 === Structure
 
 [source]
 ----
-gv-clade-index/
+chora-registry/
   0-AI-MANIFEST.a2ml
   .machine_readable/
     STATE.a2ml
@@ -469,7 +471,7 @@ gv-clade-index/
 |===
 | Phase | Deliverable | Outcome
 
-| 0 | Create `gv-clade-index` repo with schema and seed data for 202 repos | Clade taxonomy exists; all repos assigned
+| 0 | Create `chora-registry` repo with schema and seed data for 202 repos | Clade taxonomy exists; all repos assigned
 | 1 | Write `CLADE.a2ml` for all repos (batch script) | Every repo declares its identity
 | 2 | VeriSimDB instance on VPS; ingest seed data + git metadata | Central database live
 | 3 | Cloudflare Worker with `/v1/repo/:id` and `/v1/clade/:code` | API exists

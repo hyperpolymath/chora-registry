@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "MPL-2.0",
-  "description": "Cloudflare Worker API for the hyperpolymath clade registry (gv-clade-index)",
+  "description": "Cloudflare Worker API for the hyperpolymath clade registry (chora-registry)",
   "author": "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>",
   "scripts": {
     "dev": "wrangler dev",

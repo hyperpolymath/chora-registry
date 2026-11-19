@@ -1,6 +1,6 @@
 K9!
 # SPDX-License-Identifier: MPL-2.0
-# deploy.k9.ncl — gv-clade-index deployment component (Hunt level)
+# deploy.k9.ncl — chora-registry deployment component (Hunt level)
 #
 # k9-svc deployment specification with full pedigree (L1-L5).
 # Security Level: 'Hunt (requires cryptographic handshake for execution).
@@ -99,7 +99,7 @@ echo "K9: Rollback complete."
       version = "0.1.0",
       breed = "application/vnd.k9+nickel",
       magic_number = "K9!",
-      description = "gv-clade-index deployment component (Hunt level)",
+      description = "chora-registry deployment component (Hunt level)",
     },
 
     # ─────────────────────────────────────────────────────────────

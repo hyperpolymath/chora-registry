@@ -6,7 +6,7 @@
 [NOTE]
 ====
 *Status: ACTIVE.* This is the operational runbook for the coordinated
-gv-clade-index rollout. It supersedes the README phase *table* for rollout
+chora-registry rollout. It supersedes the README phase *table* for rollout
 operations only. `ROADMAP.adoc` tracks phase status (the A2ML `[route-to-mvp]`
 it replaced was retired 2026-11-14), and this runbook tells you when and how
 to update it. Filed as #31.
@@ -260,7 +260,7 @@ territory.
 walls that make earlier phases harder.
 
 *Hazard:* self-lockout. Every ruleset change must be rehearsed on one
-sacrificial repo, and this repo (`gv-clade-index`) plus `standards` must be
+sacrificial repo, and this repo (`chora-registry`) plus `standards` must be
 exempted from anything that would break the sync/propagation bots.
 
 *Go-gate:* audit (Hypatia, Scorecard, staleness) stays green estate-wide

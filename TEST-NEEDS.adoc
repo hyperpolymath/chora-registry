@@ -1,4 +1,4 @@
-== TEST-NEEDS.md — gv-clade-index
+== TEST-NEEDS.md — chora-registry
 
 === Current test state
 

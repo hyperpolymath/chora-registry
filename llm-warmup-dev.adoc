@@ -1,6 +1,6 @@
-== LLM Warmup — gv-clade-index (Developer)
+== LLM Warmup — chora-registry (Developer)
 
-=== What is gv-clade-index?
+=== What is chora-registry?
 
 See README.adoc for overview.
 

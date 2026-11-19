@@ -22,7 +22,7 @@ set -euo pipefail
 
 STANDARDS_REV=490b952b99eb22052c0ec5a1001b95dab1561097
 DEED_LINT_SHA256=6b6481b188b8228f2b0c5063835c312d966ffd19a96a9e26018b06316f4852a5
-JS="${GV_DEED_LINT_JS:-${XDG_CACHE_HOME:-$HOME/.cache}/gv-clade-index/deed_lint-$STANDARDS_REV.js}"
+JS="${GV_DEED_LINT_JS:-${XDG_CACHE_HOME:-$HOME/.cache}/chora-registry/deed_lint-$STANDARDS_REV.js}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SEED_FILE="${1:-$SCRIPT_DIR/../verisim/seed/chora-registry_praxis.deed}"

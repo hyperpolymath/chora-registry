@@ -12,7 +12,7 @@
 #   bash .machine_readable/scripts/forge/wiki-sync.sh [--dry-run] [SRC_DIR]
 #
 # Environment:
-#   WIKI_SYNC_PAT   token with contents:write on hyperpolymath/gv-clade-index
+#   WIKI_SYNC_PAT   token with contents:write on hyperpolymath/chora-registry
 #                   (the built-in GITHUB_TOKEN cannot push to the wiki git).
 #   WIKI_REPO_URL   override the wiki git URL (default derived from origin).
 #   WIKI_BRANCH     wiki git branch (default: master — Gollum's default).
@@ -124,10 +124,10 @@ fi
 git -C "$WIKI_DIR" \
     -c user.name="${WIKI_COMMIT_NAME:-hyperpolymath-wiki-sync}" \
     -c user.email="${WIKI_COMMIT_EMAIL:-6759885+hyperpolymath@users.noreply.github.com}" \
-    commit -qm "wiki: sync from gv-clade-index@$HEAD_SHA
+    commit -qm "wiki: sync from chora-registry@$HEAD_SHA
 
 Automated one-way publish of docs/wikis/ (source of truth) to the
 forge-hosted wiki. See .machine_readable/scripts/forge/wiki-sync.sh (#32)."
 
 git "${CRED_ARGS[@]}" -C "$WIKI_DIR" push -q origin "${WIKI_BRANCH:-master}"
-say "pushed $published page(s) to the wiki (from gv-clade-index@$HEAD_SHA)"
+say "pushed $published page(s) to the wiki (from chora-registry@$HEAD_SHA)"

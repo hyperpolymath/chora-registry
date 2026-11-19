@@ -1,13 +1,13 @@
 # Clone the repository
-git clone https://github.com/hyperpolymath/gv-clade-index.git
-cd gv-clade-index
+git clone https://github.com/hyperpolymath/chora-registry.git
+cd chora-registry
 
 # Using Nix (recommended for reproducibility)
 nix develop
 
 # Or using toolbox/distrobox
-toolbox create gv-clade-index-dev
-toolbox enter gv-clade-index-dev
+toolbox create chora-registry-dev
+toolbox enter chora-registry-dev
 # Install dependencies manually
 
 # Verify setup
@@ -17,7 +17,7 @@ just test    # Run test suite
 
 ### Repository Structure
 ```
-gv-clade-index/
+chora-registry/
 ├── src/                 # Source code (Perimeter 1-2)
 ├── lib/                 # Library code (Perimeter 1-2)
 ├── extensions/          # Extensions (Perimeter 2)
@@ -91,10 +91,10 @@ Use the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) an
 
 Look for issues labelled:
 
-- [`good first issue`](https://github.com/hyperpolymath/gv-clade-index/labels/good%20first%20issue) — Simple Perimeter 3 tasks
-- [`help wanted`](https://github.com/hyperpolymath/gv-clade-index/labels/help%20wanted) — Community help needed
-- [`documentation`](https://github.com/hyperpolymath/gv-clade-index/labels/documentation) — Docs improvements
-- [`perimeter-3`](https://github.com/hyperpolymath/gv-clade-index/labels/perimeter-3) — Community sandbox scope
+- [`good first issue`](https://github.com/hyperpolymath/chora-registry/labels/good%20first%20issue) — Simple Perimeter 3 tasks
+- [`help wanted`](https://github.com/hyperpolymath/chora-registry/labels/help%20wanted) — Community help needed
+- [`documentation`](https://github.com/hyperpolymath/chora-registry/labels/documentation) — Docs improvements
+- [`perimeter-3`](https://github.com/hyperpolymath/chora-registry/labels/perimeter-3) — Community sandbox scope
 
 ---
 

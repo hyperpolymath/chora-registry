@@ -1,20 +1,20 @@
 ;; SPDX-License-Identifier: MPL-2.0
 ;; Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ;;
-;; Guix channel definition for gv-clade-index
+;; Guix channel definition for chora-registry
 ;;
 ;; To use this channel, add to ~/.config/guix/channels.scm:
 ;;
 ;;   (channel
-;;     (name 'gv-clade-index)
-;;     (url "https://github.com/hyperpolymath/gv-clade-index")
+;;     (name 'chora-registry)
+;;     (url "https://github.com/hyperpolymath/chora-registry")
 ;;     (branch "main"))
 ;;
 ;; Then: guix pull
 
 (channel
   (version 0)
-  (url "https://github.com/hyperpolymath/gv-clade-index")
+  (url "https://github.com/hyperpolymath/chora-registry")
   (dependencies
    (channel
      (name 'guix)

@@ -47,7 +47,7 @@ implementations
 == Structure
 
 ....
-gv-clade-index/
+chora-registry/
 ├── 0-AI-MANIFEST.deed           # AI agent entry point (pointer-only)
 ├── chora-registry_chora.deed    # This repo's deed: identity, clade, agentic, ...
 ├── .machine_readable/           # descriptiles/STATE.deed (status), contractiles
