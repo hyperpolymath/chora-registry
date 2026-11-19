@@ -82,8 +82,10 @@ Files installed:
 
 No code reads a `chora-registry/config.toml` file. The only settings file read
 is `${XDG_CONFIG_HOME:-$HOME/.config}/rsr/defaults`, by the `just init` and
-`just container-init` recipes. It is a shell file of `KEY=value` lines (for
-example `OWNER=myorg`, `AUTHOR="My Name"`) that pre-fills their prompts.
+`just container-init` recipes. It is a shell file of `KEY=value` lines. Only
+some prompts use it: `OWNER`, `AUTHOR`, `AUTHOR_EMAIL`, `AUTHOR_ORG`,
+`AUTHOR_EMAIL_ALT` and `FORGE` in `just init`, and `OWNER` (for the registry)
+in `just container-init`. The service name and port prompts do not.
 
 == Health Checks
 
