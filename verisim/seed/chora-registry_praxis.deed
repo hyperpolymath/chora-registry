@@ -27,7 +27,7 @@
 ;; The hyperpolymath estate chora (CHORA-SPEC 9), the registry's birth estate (B1).
   :beholding-chora #uuid"0889b37b-defb-831f-973c-e119500db00e"
   :created         "2026-03-16"
-  :total-repos     327
+  :total-repos     328
 
 ;; The classification scheme the seed's clade codes belong to. judgement, not
 ;; strict: 144 placements were made by best fit or heuristic and await
@@ -162,6 +162,15 @@
         :uuid #uuid"437f5946-92c5-8f8c-a152-ced7ed7ae7df" :minted-in gv-clade-index
         :description "Social-justice-aware programming language"
         (lineage :type monorepo-child :parent "nextgen-languages")
+        (placement :scheme clade-12 :category nl :primary #t))
+
+  ;; Registered late on 2026-11-19 (owner rulings that day): minted in the
+  ;; chora-registry domain from its current path; satellite of nextgen-languages;
+  ;; placement nl, provisional until the chora and CLADE data formats are mapped.
+  (repo :name "affinescript" :owner "hyperpolymath"
+        :uuid #uuid"0858724e-265e-81d0-909b-05cf7e1b4b2d" :minted-in chora-registry
+        :description "AffineScript: affine-typed language with JavaScript ergonomics, compiling to Typed WASM"
+        (lineage :type satellite :parent "nextgen-languages")
         (placement :scheme clade-12 :category nl :primary #t))
 
   (repo :name "typell" :owner "hyperpolymath"

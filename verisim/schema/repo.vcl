@@ -66,7 +66,7 @@ DEFINE SEMANTIC repo {
   superseded_by: UUID?,         -- successor when status=superseded
   successors: [UUID],           -- forward links (splits / spinoffs)
   ended: TIMESTAMP?,            -- when an ended-family phase was first entered
-  lineage_type: ENUM("standalone", "monorepo", "monorepo-child", "inflated", "deflated")
+  lineage_type: ENUM("standalone", "monorepo", "monorepo-child", "inflated", "deflated", "hub", "satellite")
 };
 
 -- Document modality: full-text searchable content

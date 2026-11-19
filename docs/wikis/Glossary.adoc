@@ -15,7 +15,7 @@ Entity model:: The seven VeriSimDB entity types — repo, clade, todo, observati
 Pointer authority:: Whether a cached value is a `pointer`, `local`, or `derived`
   (see ADR 0001).
 Lineage:: A repo's structural history — standalone, monorepo, monorepo-child,
-  inflated, or deflated.
+  inflated, deflated, hub or satellite.
 Contractile:: A machine-readable policy contract (e.g. `must`, `trust`, `dust`,
   `bust`) under `.machine_readable/contractiles/`.
 CLADE.a2ml:: The retired per-repo clade declaration (A2ML is retired). A repo's

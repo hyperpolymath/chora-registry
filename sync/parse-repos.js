@@ -67,7 +67,9 @@ function want(f, k, t, where, required = true) {
 }
 const PATH = /^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const LINEAGE = new Set(["standalone", "monorepo", "monorepo-child", "inflated", "deflated"]);
+// hub and satellite are the #122 lineage types (standards clade-to-repo-deed.adoc §3),
+// added for affinescript (owner ruling 2026-11-19).
+const LINEAGE = new Set(["standalone", "monorepo", "monorepo-child", "inflated", "deflated", "hub", "satellite"]);
 const DOMAINS = new Set(["gv-clade-index", "chora-registry"]);
 
 const [top, clauses] = members(items, "seed",

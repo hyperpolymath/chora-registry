@@ -108,7 +108,7 @@ the `+gv-clade-index+` domain, the id a deed writes as
 `+uuid+` because `+/v1+` is additive-only
 (`docs/decisions/0004-api-versioning.adoc`); `+/v2+` makes it the `+uuid+`.
 * *Clade*: Primary (1) + secondary (0+)
-* *Lineage*: standalone, monorepo, monorepo-child, inflated, deflated
+* *Lineage*: standalone, monorepo, monorepo-child, inflated, deflated, hub, satellite
 
 == Pointer Authority
 
