@@ -150,6 +150,8 @@ januskey:
   Clade membership tracked in VeriSimDB only, no prefix rename.
 * **Monorepo children**: Sub-projects within monorepos (e.g., `reposystem/contractiles/`)
   do not get prefixed. Their parent gets the prefix. VeriSimDB tracks them as children.
+* **The registry itself** (`chora-registry`): named after the chora it registers, not
+  its clade. Its clade `gv` is recorded in its deed, with no prefix rename.
 
 == Identity Model
 

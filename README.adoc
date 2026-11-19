@@ -104,7 +104,7 @@ Every repo has:
 `+github.com/{owner}/{name}+` in the `+@url+` namespace, as `+/v1+` has always
 served it. `+uuid_v8+` is the ADR-008 profile C UUIDv8 of the same name in
 the `+gv-clade-index+` domain, the id a deed writes as
-`+#u8"chora-registry:github.com/{owner}/{name}"+`. It is added beside
+`+#u8"gv-clade-index:github.com/{owner}/{name}"+`. It is added beside
 `+uuid+` because `+/v1+` is additive-only
 (`docs/decisions/0004-api-versioning.adoc`); `+/v2+` makes it the `+uuid+`.
 * *Clade*: Primary (1) + secondary (0+)
