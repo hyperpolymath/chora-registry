@@ -1,7 +1,7 @@
 {
-  "total_repos": 327,
+  "total_repos": 328,
   "total_clades": 12,
-  "generated": "2026-11-15T00:00:11Z",
+  "generated": "2026-11-19T02:36:07Z",
   "clades": [
     {
       "code": "fv",
@@ -68,12 +68,13 @@
         "ast",
         "language"
       ],
-      "member_count": 35,
+      "member_count": 36,
       "members": [
         "nextgen-languages",
         "ephapax",
         "anvomidav",
         "wokelang",
+        "affinescript",
         "typell",
         "panll",
         "metadata-grammar",
@@ -836,6 +837,22 @@
       "parent": "nextgen-languages",
       "description": "Social-justice-aware programming language",
       "github": "hyperpolymath/wokelang"
+    },
+    "affinescript": {
+      "name": "affinescript",
+      "uuid": "0858724e-265e-81d0-909b-05cf7e1b4b2d",
+      "minted_in": "chora-registry",
+      "placements": [
+        {
+          "scheme": "clade-12",
+          "category": "nl",
+          "primary": true
+        }
+      ],
+      "lineage": "satellite",
+      "parent": "nextgen-languages",
+      "description": "AffineScript: affine-typed language with JavaScript ergonomics, compiling to Typed WASM",
+      "github": "hyperpolymath/affinescript"
     },
     "typell": {
       "name": "typell",
