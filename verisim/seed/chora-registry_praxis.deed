@@ -212,8 +212,9 @@
         :uuid #uuid"8e515699-3fb9-8785-8883-ef2a100c2e02" :minted-in gv-clade-index
         :description "RSR template — scaffold for new repos"
         (lineage :type standalone)
-        (placement :scheme clade-12 :category rm :primary #t)
-        (placement :scheme clade-12 :category gv :rank 1))
+        ;; gv rank 1 dropped 2026-11-19 (owner ruling, A1 thread): the template
+        ;; ships governance files but is not a governance project.
+        (placement :scheme clade-12 :category rm :primary #t))
 
   (repo :name "rsr-julia-library-template-repo" :owner "hyperpolymath"
         :uuid #uuid"190447af-06a2-8756-a3d5-0f9483b3b321" :minted-in gv-clade-index
