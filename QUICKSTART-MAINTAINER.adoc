@@ -80,9 +80,10 @@ Files installed:
 
 == Configuration
 
-Default config location: `$XDG_CONFIG_HOME/chora-registry/config.toml`
-
-Fallback: `$HOME/.config/chora-registry/config.toml`
+No code reads a `chora-registry/config.toml` file. The only settings file read
+is `${XDG_CONFIG_HOME:-$HOME/.config}/rsr/defaults`, by the `just init` and
+`just container-init` recipes. It is a shell file of `KEY=value` lines (for
+example `OWNER=myorg`, `AUTHOR="My Name"`) that pre-fills their prompts.
 
 == Health Checks
 
