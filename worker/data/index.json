@@ -1,7 +1,7 @@
 {
   "total_repos": 328,
   "total_clades": 12,
-  "generated": "2026-11-19T02:36:07Z",
+  "generated": "2026-11-19T02:37:10Z",
   "clades": [
     {
       "code": "fv",
@@ -979,11 +979,6 @@
           "scheme": "clade-12",
           "category": "rm",
           "primary": true
-        },
-        {
-          "scheme": "clade-12",
-          "category": "gv",
-          "rank": 1
         }
       ],
       "lineage": "standalone",
