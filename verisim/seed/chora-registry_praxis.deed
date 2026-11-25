@@ -27,7 +27,7 @@
 ;; The hyperpolymath estate chora (CHORA-SPEC 9), the registry's birth estate (B1).
   :beholding-chora #uuid"0889b37b-defb-831f-973c-e119500db00e"
   :created         "2026-03-16"
-  :total-repos     328
+  :total-repos     329
 
 ;; The classification scheme the seed's clade codes belong to. judgement, not
 ;; strict: 144 placements were made by best fit or heuristic and await
@@ -2205,4 +2205,19 @@
         :description "Cross-platform tool for autonomous real-time audio volume and clarity optimization for non-technical users."
         (lineage :type standalone)
         (placement :scheme clade-12 :category dx :primary #t))
+
+  ;; Registered 2026-11-25 (owner request via the decision desk). Id minted once
+  ;; by sync/uuid-v8.sh in the chora-registry domain from its birth path
+  ;; github.com/hyperpolymath/guix-channel (ADR 0008). IS: estate Guix channel
+  ;; packaging Idris2 0.7.0 built from its checked-in Scheme bootstrap. IS-NOT:
+  ;; not Idris2 upstream; not the proven-tests-and-benches CI installer; not the
+  ;; per-repo toolchain pins (those stay in each consumer's build/). The registry
+  ;; requires one primary clade-12 placement: dx is PROVISIONAL, for the owner to
+  ;; confirm or change.
+  (repo :name "guix-channel" :owner "hyperpolymath"
+        :uuid #uuid"335ef43f-9709-8e37-be22-b170134a82f9" :minted-in chora-registry
+        :description "Estate Guix channel packaging Idris2 0.7.0 built from its checked-in Scheme bootstrap. Not Idris2 upstream; not the proven-tests-and-benches CI installer; not the per-repo toolchain pins (those stay in each consumer's build/)."
+        (lineage :type standalone)
+        (placement :scheme clade-12 :category dx :primary #t))
+
 )
