@@ -1,7 +1,7 @@
 {
-  "total_repos": 328,
+  "total_repos": 329,
   "total_clades": 12,
-  "generated": "2026-11-19T02:37:10Z",
+  "generated": "2026-11-25T13:47:53Z",
   "clades": [
     {
       "code": "fv",
@@ -339,7 +339,7 @@
         "sdk",
         "ecosystem"
       ],
-      "member_count": 80,
+      "member_count": 81,
       "members": [
         "developer-ecosystem",
         "asdf-tool-plugins",
@@ -420,7 +420,8 @@
         "qubes-sdp",
         "rescript-ecosystem",
         "vex-tools",
-        "volumod"
+        "volumod",
+        "guix-channel"
       ]
     },
     {
@@ -6119,6 +6120,22 @@
       "parent": "",
       "description": "Cross-platform tool for autonomous real-time audio volume and clarity optimization for non-technical users.",
       "github": "hyperpolymath/volumod"
+    },
+    "guix-channel": {
+      "name": "guix-channel",
+      "uuid": "335ef43f-9709-8e37-be22-b170134a82f9",
+      "minted_in": "chora-registry",
+      "placements": [
+        {
+          "scheme": "clade-12",
+          "category": "dx",
+          "primary": true
+        }
+      ],
+      "lineage": "standalone",
+      "parent": "",
+      "description": "Estate Guix channel packaging Idris2 0.7.0 built from its checked-in Scheme bootstrap. Not Idris2 upstream; not the proven-tests-and-benches CI installer; not the per-repo toolchain pins (those stay in each consumer's build/).",
+      "github": "hyperpolymath/guix-channel"
     }
   }
 }
