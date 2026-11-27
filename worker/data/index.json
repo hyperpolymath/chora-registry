@@ -1,7 +1,7 @@
 {
-  "total_repos": 329,
+  "total_repos": 330,
   "total_clades": 12,
-  "generated": "2026-11-25T13:47:53Z",
+  "generated": "2026-11-27T12:26:08Z",
   "clades": [
     {
       "code": "fv",
@@ -471,7 +471,7 @@
         "llm",
         "proof-synthesis"
       ],
-      "member_count": 10,
+      "member_count": 11,
       "members": [
         "neural-foundations",
         "hypatia",
@@ -482,7 +482,8 @@
         "airborne-submarine-squadron",
         "oikos-economics-accounting-dsl",
         "technical-notes",
-        "tentacles-agentic-syllabus"
+        "tentacles-agentic-syllabus",
+        "ai-skills"
       ]
     },
     {
@@ -6136,6 +6137,22 @@
       "parent": "",
       "description": "Estate Guix channel packaging Idris2 0.7.0 built from its checked-in Scheme bootstrap. Not Idris2 upstream; not the proven-tests-and-benches CI installer; not the per-repo toolchain pins (those stay in each consumer's build/).",
       "github": "hyperpolymath/guix-channel"
+    },
+    "ai-skills": {
+      "name": "ai-skills",
+      "uuid": "cbae4cbd-803b-8ddc-acd6-657b67ba039f",
+      "minted_in": "chora-registry",
+      "placements": [
+        {
+          "scheme": "clade-12",
+          "category": "ax",
+          "primary": true
+        }
+      ],
+      "lineage": "standalone",
+      "parent": "",
+      "description": "A public library of agent skills, the tools that build and verify them from data, and the sealed experiments that show each skill works",
+      "github": "metadatastician/ai-skills"
     }
   }
 }

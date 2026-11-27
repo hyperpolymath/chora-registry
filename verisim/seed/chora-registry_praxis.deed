@@ -27,7 +27,7 @@
 ;; The hyperpolymath estate chora (CHORA-SPEC 9), the registry's birth estate (B1).
   :beholding-chora #uuid"0889b37b-defb-831f-973c-e119500db00e"
   :created         "2026-03-16"
-  :total-repos     329
+  :total-repos     330
 
 ;; The classification scheme the seed's clade codes belong to. judgement, not
 ;; strict: 144 placements were made by best fit or heuristic and await
@@ -2219,5 +2219,14 @@
         :description "Estate Guix channel packaging Idris2 0.7.0 built from its checked-in Scheme bootstrap. Not Idris2 upstream; not the proven-tests-and-benches CI installer; not the per-repo toolchain pins (those stay in each consumer's build/)."
         (lineage :type standalone)
         (placement :scheme clade-12 :category dx :primary #t))
+
+
+  ;; ai-skills: :owner is the per-row estate (metadatastician); the seed's own
+  ;; estate is hyperpolymath (RS1). Primary clade-12 placement ax, owner-ruled.
+  (repo :name "ai-skills" :owner "metadatastician"
+        :uuid #uuid"cbae4cbd-803b-8ddc-acd6-657b67ba039f" :minted-in chora-registry
+        :description "A public library of agent skills, the tools that build and verify them from data, and the sealed experiments that show each skill works"
+        (lineage :type standalone)
+        (placement :scheme clade-12 :category ax :primary #t))
 
 )
